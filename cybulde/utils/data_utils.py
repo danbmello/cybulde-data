@@ -6,7 +6,7 @@ from cybulde.utils.utils import get_logger, run_shell_command
 DATA_UTIL_LOGGER = get_logger(Path(__file__).name)
 
 # Return if DVD was initialized
-def is_dev_initialize() -> bool:
+def is_dvc_initialized() -> bool:
     return (Path().cwd() / ".dvc").exists()
 
 # Function to initialize DVC

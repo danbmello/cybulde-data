@@ -1,7 +1,7 @@
 services:
   app:
     user: "${USER_ID:-1000}"
-    hostname: "${HOST_NAME:-emkademy}"
+    hostname: "${HOST_NAME:-danbm}"
     image: cybulde-data
     platform: linux/amd64
     container_name: cybulde-data-container
