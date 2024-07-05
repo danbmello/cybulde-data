@@ -49,18 +49,39 @@ def initialize_dvc_storage(dvc_remote_name: str, dvc_remote_url: str) -> None:
 
 
 # Function to create a new version of our dataset
+# def commit_to_dvc(dvc_raw_data_folder: str, dvc_remote_name: str) -> None:
+#     # Get the currently data version
+#     current_version = run_shell_command("git tag --list | sort -t v -k 2 -g | tail -1 | sed 's/v//'")
+#     if not current_version:
+#         current_version = "0"
+#     next_version = f"v{int(current_version) + 1}"
+#     # Added new data to DVC start tracking
+#     run_shell_command(f"dvc add {dvc_raw_data_folder}")
+#     # Add DVC files to GitHub again (That's because the above command change them)
+#     run_shell_command("git add .")
+#     # Commit changes
+#     run_shell_command(f"git commit -m 'Updated version of the data from v{current_version} to {next_version}'")
+#     # Assign a git tag for our new version
+#     run_shell_command(f"git tag -a {next_version} -m 'Data version {next_version}'")
+#     # Push new dataset to our remote storage
+#     run_shell_command(f"dvc push {dvc_raw_data_folder}.dvc --remote {dvc_remote_name}")
+#     # Push our changes to GitHub
+#     run_shell_command("git push --follow-tags")
+#     run_shell_command("git push -f --tags")
+
 def commit_to_dvc(dvc_raw_data_folder: str, dvc_remote_name: str) -> None:
-    # Get the currently data version
+    # Get the current data version
     current_version = run_shell_command("git tag --list | sort -t v -k 2 -g | tail -1 | sed 's/v//'")
     if not current_version:
         current_version = "0"
     next_version = f"v{int(current_version) + 1}"
-    # Added new data to DVC start tracking
+    # Add new data to DVC for tracking
     run_shell_command(f"dvc add {dvc_raw_data_folder}")
-    # Add DVC files to GitHub again (That's because the above command change them)
+    # Add DVC files to GitHub again (because the above command changes them)
     run_shell_command("git add .")
     # Commit changes
-    run_shell_command(f"git commit -m 'Updated version of the data from v{current_version} to {next_version}'")
+    commit_message = f"Updated version of the data from v{current_version} to {next_version}"
+    run_shell_command(f"git commit -m '{commit_message}'")
     # Assign a git tag for our new version
     run_shell_command(f"git tag -a {next_version} -m 'Data version {next_version}'")
     # Push new dataset to our remote storage
@@ -68,7 +89,7 @@ def commit_to_dvc(dvc_raw_data_folder: str, dvc_remote_name: str) -> None:
     # Push our changes to GitHub
     run_shell_command("git push --follow-tags")
     run_shell_command("git push -f --tags")
-    
+
 
 # Function to version data
 def make_new_data_version(dvc_raw_data_folder: str, dvc_remote_name: str) -> None:
