@@ -1,8 +1,7 @@
-
 from pathlib import Path
-from cybulde.utils.utils import get_logger, run_shell_command
 from subprocess import CalledProcessError
 
+from cybulde.utils.utils import get_logger, run_shell_command
 
 DATA_UTIL_LOGGER = get_logger(Path(__file__).name)
 
@@ -18,7 +17,7 @@ def initialize_dvc() -> None:
     if is_dvc_initialized():
         DATA_UTIL_LOGGER.info("DVC is already initialize")
         return
-    
+
     DATA_UTIL_LOGGER.info("Initializing DVC")
 
     # Run shell commands to initialize DVC
@@ -80,7 +79,5 @@ def make_new_data_version(dvc_raw_data_folder: str, dvc_remote_name: str) -> Non
             DATA_UTIL_LOGGER.info("Data and pipelines are up to date.")
             return
         commit_to_dvc(dvc_raw_data_folder, dvc_remote_name)
-    except:
+    except CalledProcessError:
         commit_to_dvc(dvc_raw_data_folder, dvc_remote_name)
-
-
