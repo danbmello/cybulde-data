@@ -47,9 +47,6 @@ COPY ./docker/scripts/* /
 RUN chown -R ${USER_NAME} /*.sh && chmod +x /*.sh
 USER ${USER_NAME}
 
-# RUN eval "$(ssh-agent -s)" \ 
-#     && ssh-add /home/${USER_NAME}/.ssh/id_ed25519
-
 RUN git config --global user.email "danbmello@gmail.com" \
     && git config --global user.name "danbm" \
     && git config --global --add safe.directory /app
